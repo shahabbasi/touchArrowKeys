@@ -12,32 +12,38 @@ function setKeyDown(isDown){
         resultY = releasePos.y - clickPos.y;
         let result = 0;
 
-        if(resultX != 0)
+        if(resultX != 0 & resultY != 0){
             result = resultY/resultX;
-        else
-            console.log('vertical move');
+        }else{
+            result = 1;
+            //vertical move
+        }
 
-        if(result < 0.5 & result > -0.5)
-            console.log('swipe');
-        else
-            console.log('out of swipe line')
+        if(result < 0.5 & result > -0.5){
+            if(resultX < 0){
+                document.querySelector('body').style.background = "black";
+            }else{
+                document.querySelector('body').style.background = "red"
+            }
+        }else{
+            // out of swipe line
+        }
     }
 }
 
 function onkeydown(e){
-    setKeyDown(true);
     clickPos = {x: e.clientX, y: e.clientY };
+    setKeyDown(true);
 };
 
 function onkeyup(e){
-    setKeyDown(false);
     releasePos = {x: e.clientX, y: e.clientY };
+    setKeyDown(false);
 }
 
-body = document.querySelector('body');
-body.onkeydown = (e)=>{
+window.onmousedown = function(e){
     onkeydown(e);
 }
-body.onkeyup = (e)=>{
+window.onmouseup = function(e){
     onkeyup(e);
 }
